@@ -15,7 +15,11 @@ public class Ask extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ask_id")
     private Long id;
+
+    @Column(nullable = false, length = 50)
     private String title;
+
+    @Column(nullable = false, length = 300)
     private String content;
 
     @Column(columnDefinition = "BOOLEAN DEFAULT true")

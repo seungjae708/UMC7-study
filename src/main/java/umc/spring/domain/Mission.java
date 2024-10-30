@@ -22,11 +22,11 @@ public class Mission extends BaseEntity{
 
     private Integer reward;
 
-    @Column(length = 300)
+    @Column(nullable = false, length = 300)
     private String content;
     private LocalDate deadline;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
     private List<MissionComplete> missionComplete = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

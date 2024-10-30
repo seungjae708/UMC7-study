@@ -25,11 +25,7 @@ public class Store extends BaseEntity {
     @Column(nullable = false, length = 50)
     private String address;
 
-    private String status;
-
     private Float score;
-
-    private String category;
 
     @ManyToOne
     @JoinColumn(name = "region_id")

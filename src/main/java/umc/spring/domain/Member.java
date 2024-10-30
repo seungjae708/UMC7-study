@@ -30,10 +30,20 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Column(nullable = false, length = 20)
     private String birth;
+
+    @Column(nullable = false, length = 50)
     private String address;
+
+    @Column(nullable = false, length = 20)
     private String nickname;
+
+    @Column(nullable = false, length = 50)
     private String email;
+
+    @Column(nullable = false, length = 20)
     private Integer phone;
 
     @Enumerated(EnumType.STRING)
