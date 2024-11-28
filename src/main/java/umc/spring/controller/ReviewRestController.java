@@ -19,7 +19,7 @@ public class ReviewRestController {
 
     private final ReviewCommandService reviewCommandService;
 
-    @PostMapping("/{storeId}")
+    @PostMapping("/{storeId}/review")
     public ApiResponse<ReviewResponseDTO.InsertResultDTO> add(
             @RequestParam("memberId") @ExistMember Long memberId,
             @PathVariable("storeId") @ExistStore Long storeId,
