@@ -13,11 +13,11 @@ public class MemberRequestDTO {
 
     @Getter
     public static class JoinDto{
-        @NotBlank(message = "이름은 필수 입력 항목입니다. 최대 10자 까지 입력 가능")
+        @NotBlank(message = "이름은 필수 입력 항목입니다.")
         @Size(max = 10)
         @Schema(description = "이름", example = "최승재", type="string")
         String name;
-        @NotNull(message = "성별은 필수 입력 항목입니다. 남성일 경우 1, 여성일 경우 2 값을 넘겨주세요.")
+        @NotNull(message = "성별은 필수 입력 항목입니다.")
         @Schema(description = "성별", example = "1", type = "int")
         Integer gender;
         @NotNull(message = "널이어서는 안됩니다.")
