@@ -17,6 +17,7 @@ import umc.spring.dto.ReviewRequestDTO;
 import umc.spring.dto.ReviewResponseDTO;
 import umc.spring.service.ReviewService.ReviewCommandService;
 import umc.spring.service.ReviewService.ReviewQueryService;
+import umc.spring.validation.annotation.CheckPage;
 import umc.spring.validation.annotation.ExistMember;
 import umc.spring.validation.annotation.ExistStore;
 
@@ -48,8 +49,30 @@ public class ReviewRestController {
     @Parameters({
             @Parameter(name = "storeId", description = "가게의 아이디, path variable 입니다!")
     })
-    public ApiResponse<ReviewResponseDTO.ReviewPreViewListDTO> getReviewList(@ExistStore @PathVariable(name = "storeId") Long storeId,@RequestParam(name = "page") Integer page){
+    public ApiResponse<ReviewResponseDTO.ReviewPreViewListDTO> getReviewList(
+            @ExistStore @PathVariable(name = "storeId") Long storeId,
+            @CheckPage @RequestParam(name = "page", defaultValue = "1") Integer page) {
         Page<Review> reviewList = reviewQueryService.getReviewList(storeId, page);
         return ApiResponse.onSuccess(ReviewConverter.reviewPreViewListDTO(reviewList));
     }
+
+    @GetMapping("/member/{memberId}/reviews")
+    @Operation(summary = "사용자가 작성한 리뷰 목록 조회 API", description = "특정 사용자가 작성한 리뷰를 페이징 처리하여 조회합니다.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH003", description = "access 토큰을 주세요!", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH004", description = "access 토큰 만료", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH006", description = "access 토큰 모양이 이상함", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+    })
+    @Parameters({
+            @Parameter(name = "memberId", description = "회원 아이디, path variable 입니다!"),
+            @Parameter(name = "page", description = "조회할 페이지 번호입니다. 기본값은 1입니다.")
+    })
+    public ApiResponse<ReviewResponseDTO.ReviewPreViewListDTO> getUserReviews(
+            @ExistMember @PathVariable(name = "memberId") Long memberId,
+            @CheckPage @RequestParam(name = "page", defaultValue = "1") Integer page) {
+        Page<Review> reviewList = reviewQueryService.getReviewsByMember(memberId, page);
+        return ApiResponse.onSuccess(ReviewConverter.reviewPreViewListDTO(reviewList));
+    }
+
 }
