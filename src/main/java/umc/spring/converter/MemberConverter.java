@@ -38,6 +38,9 @@ public class MemberConverter {
                 .specAddress(request.getSpecAddress())
                 .gender(gender)
                 .name(request.getName())
+                .email(request.getEmail())
+                .password(request.getPassword())
+                .role(request.getRole())
                 .memberPrefer(new ArrayList<>())
                 .build();
     }
