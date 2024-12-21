@@ -1,16 +1,20 @@
 package umc.spring.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.Setter;
+import umc.spring.domain.enums.Role;
 import umc.spring.validation.annotation.ExistCategories;
 
 import java.util.List;
 
 public class MemberRequestDTO {
 
+    @Setter
     @Getter
     public static class JoinDto{
         @NotBlank(message = "이름은 필수 입력 항목입니다.")
@@ -34,5 +38,11 @@ public class MemberRequestDTO {
         String specAddress;
         @ExistCategories
         List<Long> preferCategory;
+        @Email
+        String email;    // 이메일 필드 추가
+        @NotBlank
+        String password;    // 비밀번호 필드 추가
+        @NotNull
+        Role role;    // 역할 필드 추가
     }
 }
